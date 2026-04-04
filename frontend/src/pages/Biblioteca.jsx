@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TarjetaLibro from '../components/TarjetaLibro.jsx'
+import CarruselLibros from '../components/CarruselLibros.jsx'
 import Header from '../components/Header.jsx'
 import { formatearCronometro } from '../components/Timer.jsx'
 import { API } from '../services/api.js'
@@ -50,7 +51,7 @@ export default function Biblioteca() {
   
   const librosFiltrados =
     filtro === 'todos'
-      ? libros.filter((l) => l.estado !== 'leyendo')
+      ? libros
       : filtro === 'leyendo'
       ? []
       : libros.filter((l) => l.estado === filtro)
@@ -122,12 +123,6 @@ export default function Biblioteca() {
                     <li className="bib-sidebar-item" onClick={() => navigate('/timers')}>
                       <span>◇</span> Timers
                     </li>
-                  </ul>
-                </div>
-
-                <div className="bib-sidebar-block">
-                  <p className="bib-sidebar-seccion">Explorar</p>
-                  <ul className="bib-sidebar-list">
                     <li className="bib-sidebar-item" onClick={() => navigate('/reportes')}>
                       <span>◇</span> Reportes
                     </li>
@@ -164,11 +159,7 @@ export default function Biblioteca() {
                       No estás leyendo ningún libro en este momento.
                     </div>
                   ) : (
-                    <div className="bib-grid">
-                      {librosLeyendo.map((libro) => (
-                        <TarjetaLibro key={libro.id} libro={libro} />
-                      ))}
-                    </div>
+                    <CarruselLibros libros={librosLeyendo} />
                   )
                 ) : librosFiltrados.length === 0 ? (
                   <div className="estado-vacio">
@@ -178,11 +169,7 @@ export default function Biblioteca() {
                       : 'No hay libros en esta colección.'}
                   </div>
                 ) : (
-                  <div className="bib-grid">
-                    {librosFiltrados.map((libro) => (
-                      <TarjetaLibro key={libro.id} libro={libro} />
-                    ))}
-                  </div>
+                  <CarruselLibros libros={librosFiltrados} />
                 )}
               </section>
             </div>

@@ -5,10 +5,12 @@ import FormLibro from './pages/FormLibro.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import Timers from './pages/Timers.jsx'
 import Reportes from './pages/Reportes.jsx'
+import BackButton from './components/BackButton.jsx'
 
 export default function App() {
   return (
     <BrowserRouter>
+      <BackButton />
       <Routes>
         <Route path="/"                   element={<LandingPage />} />
         <Route path="/biblioteca"         element={<Biblioteca />} />

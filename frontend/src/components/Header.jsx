@@ -9,7 +9,7 @@ function Header() {
     <header className="landing-header">
       <Link to="/" className="landing-logo-link">
         <div className="landing-logo">
-          BOOKISH — EL ARCHIVO NOIR
+          BOOKISH
         </div>
       </Link>
       

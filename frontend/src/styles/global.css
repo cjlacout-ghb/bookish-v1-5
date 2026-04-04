@@ -1307,7 +1307,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  border-top: 1px solid var(--oro-oscuro);
   border-bottom: 1px solid var(--oro-oscuro);
   margin-top: 0.5rem;
   margin-bottom: var(--espacio-md);
@@ -1397,6 +1396,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   transform: translateY(1px);
 }
 
+.bib-main-grid {
+  min-width: 0; /* Permite que el contenedor de flex haga overflow-x correctamente dentro de CSS Grid */
+}
 .bib-main-grid h2 {
   font-family: var(--fuente-titular);
   font-size: 1.25rem;
@@ -1430,11 +1432,81 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   font-style: italic;
   color: var(--oro-tenue);
 }
-.bib-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 2rem;
+/* Carrusel basado en TranslateX (Arquitectura a prueba de CSS Grid) */
+.carrusel-wrapper {
+  position: relative;
+  width: 100%;
 }
+
+.carrusel-viewport {
+  width: 100%;
+  overflow: hidden; /* Cortamos explícitamente lo que sobra de las tarjetas, sin afectar los botones padre */
+  padding: 1rem 0;
+}
+
+.carrusel-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content; /* El track ocupará todo el ancho real de todas las tarjetas sumadas */
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carrusel-track > * {
+  flex: 0 0 240px; /* Ancho fijo garantizado para cada tarjeta */
+}
+
+/* Botones de navegación del Carrusel estilo Noir */
+.carrusel-btn {
+  background: var(--superficie);
+  color: var(--oro-oscuro);
+  border: 2px solid var(--oro- oscuros); /* Sobrescribimos en hover y left/right */
+  border-radius: 0; /* Geométrico, nada curvo */
+  width: 35px;
+  height: 65px; /* Más alto que ancho */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  transition: all var(--transicion);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.carrusel-btn.left {
+  left: -40px;
+  border: 1px solid var(--oro-oscuro);
+  border-left: none; /* Abierto por la izquierda */
+}
+
+.carrusel-btn.right {
+  right: -40px;
+  border: 1px solid var(--oro-oscuro);
+  border-right: none; /* Abierto por la derecha */
+}
+
+.carrusel-btn:hover {
+  background: var(--sup-alta);
+  border-color: var(--oro-primario);
+  color: var(--oro-primario);
+  /* Mantenemos el baseline en translateY */
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carrusel-arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+  /* Ligero ajuste para compensar ópticamente el peso del triángulo */
+}
+.carrusel-btn.left .carrusel-arrow {
+  transform: translateX(-2px);
+}
+.carrusel-btn.right .carrusel-arrow {
+  transform: translateX(2px);
+}
+
 
 .noir-card {
   background-color: var(--superficie);
@@ -2398,6 +2470,46 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .btn-premium--stop:hover:not(:disabled) {
   background: rgba(192, 57, 43, 0.08);
   border-color: var(--texto-error);
+}
+
+/* ── Global Back Button ──────────────────────────────────────────────────── */
+.btn-back-global {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--superficie);
+  color: var(--oro-primario);
+  border: 1px solid var(--oro-oscuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all var(--transicion);
+}
+
+.btn-back-global:hover {
+  background-color: var(--sup-max);
+  border-color: var(--oro-primario);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 10px rgba(201, 168, 76, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-back-global .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .btn-back-global {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 45px;
+    height: 45px;
+  }
 }
 
 .timer-divisor {

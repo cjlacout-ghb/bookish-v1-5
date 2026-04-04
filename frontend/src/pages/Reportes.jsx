@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header.jsx'
 import { formatearTiempo, formatearRelojBA, getHoyBA } from '../components/Timer.jsx'
 import { API } from '../services/api.js'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import { es } from 'date-fns/locale/es'
+import "react-datepicker/dist/react-datepicker.css"
+
+registerLocale('es', es)
+
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 function hoy() {
@@ -62,14 +68,23 @@ function TabDia() {
   return (
     <div className="reporte-tab">
       <div className="reporte-controles">
-        <label className="campo__etiqueta">Fecha</label>
-        <input
-          type="date"
-          className="reporte-date-input"
-          value={fecha}
-          max={hoy()}
-          onChange={e => setFecha(e.target.value)}
-        />
+        <div className="campo">
+          <label className="campo__etiqueta" htmlFor="f-reporte-fecha">Fecha</label>
+          <DatePicker
+            selected={fecha ? new Date(fecha + 'T12:00:00') : null}
+            onChange={(date) => {
+              const val = date ? date.toISOString().split('T')[0] : ''
+              setFecha(val)
+            }}
+            dateFormat="dd-MM-yyyy"
+            className="campo__entrada reporte-date-input"
+            locale="es"
+            placeholderText="dd-mm-aaaa"
+            autoComplete="off"
+            id="f-reporte-fecha"
+            maxDate={new Date()}
+          />
+        </div>
       </div>
 
       {cargando ? (
@@ -166,25 +181,31 @@ function TabMes() {
   return (
     <div className="reporte-tab">
       <div className="reporte-controles">
-        <label className="campo__etiqueta">Año</label>
-        <input
-          type="number"
-          className="reporte-num-input"
-          value={year}
-          min={2020}
-          max={new Date().getFullYear()}
-          onChange={e => setYear(Number(e.target.value))}
-        />
-        <label className="campo__etiqueta">Mes</label>
-        <select
-          className="reporte-select"
-          value={month}
-          onChange={e => setMonth(Number(e.target.value))}
-        >
-          {MESES_ES.slice(1).map((nombre, i) => (
-            <option key={i + 1} value={i + 1}>{nombre}</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label className="campo__etiqueta" htmlFor="r-mes-anio">Año</label>
+          <input
+            id="r-mes-anio"
+            type="number"
+            className="campo__entrada reporte-num-input"
+            value={year}
+            min={2020}
+            max={new Date().getFullYear()}
+            onChange={e => setYear(Number(e.target.value))}
+          />
+        </div>
+        <div className="campo">
+          <label className="campo__etiqueta" htmlFor="r-mes-mes">Mes</label>
+          <select
+            id="r-mes-mes"
+            className="campo__entrada campo__entrada--select reporte-select"
+            value={month}
+            onChange={e => setMonth(Number(e.target.value))}
+          >
+            {MESES_ES.slice(1).map((nombre, i) => (
+              <option key={i + 1} value={i + 1}>{nombre}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {cargando ? (
@@ -251,15 +272,18 @@ function TabAnio() {
   return (
     <div className="reporte-tab">
       <div className="reporte-controles">
-        <label className="campo__etiqueta">Año</label>
-        <input
-          type="number"
-          className="reporte-num-input"
-          value={year}
-          min={2020}
-          max={new Date().getFullYear()}
-          onChange={e => setYear(Number(e.target.value))}
-        />
+        <div className="campo">
+          <label className="campo__etiqueta" htmlFor="r-anio-anio">Año</label>
+          <input
+            id="r-anio-anio"
+            type="number"
+            className="campo__entrada reporte-num-input"
+            value={year}
+            min={2020}
+            max={new Date().getFullYear()}
+            onChange={e => setYear(Number(e.target.value))}
+          />
+        </div>
       </div>
 
       {cargando ? (
