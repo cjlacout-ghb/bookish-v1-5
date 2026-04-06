@@ -2,12 +2,19 @@ import { Link, useLocation } from 'react-router-dom'
 import { memo } from 'react'
 
 function Header() {
-  const location = useLocation();
-  const isLanding = location.pathname === '/';
+  const location = useLocation()
 
   return (
     <header className="landing-header">
-      <Link to="/" className="landing-logo-link">
+      <Link 
+        to="/" 
+        className="landing-logo-link"
+        onClick={() => {
+          if (location.pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
+      >
         <div className="landing-logo">
           BOOKISH
         </div>
@@ -42,9 +49,11 @@ function Header() {
       </nav>
 
       <div className="landing-actions">
-        <span className="material-symbols-outlined nav-icon" data-icon="menu_book">
-          menu_book
-        </span>
+        <Link to="/guia" title="Guía de Usuario" style={{ color: 'inherit', textDecoration: 'none' }}>
+          <span className="material-symbols-outlined nav-icon" data-icon="menu_book">
+            menu_book
+          </span>
+        </Link>
       </div>
     </header>
   )

@@ -752,6 +752,27 @@ input, textarea, select {
   color: var(--texto-primario);
 }
 
+.atributo__valor--interactivo {
+  cursor: pointer;
+  transition: color var(--transicion), text-decoration-color var(--transicion);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.atributo__valor--interactivo:hover {
+  color: var(--oro-primario);
+  text-decoration-color: var(--oro-primario);
+}
+
+.texto-interactivo {
+  cursor: pointer;
+  transition: color var(--transicion);
+}
+.texto-interactivo:hover {
+  color: var(--oro-primario);
+}
+
 .detalle-libro__acciones {
   display: flex;
   gap: var(--espacio-sm);

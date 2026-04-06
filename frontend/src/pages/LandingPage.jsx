@@ -38,7 +38,7 @@ export default function LandingPage() {
                 la biblioteca
               </Link>
               <Link to="/agregar" className="btn-landing secondary">
-                Registrar Libro
+                Agregar Libro
               </Link>
             </div>
           </div>
@@ -56,13 +56,15 @@ export default function LandingPage() {
           <div className="features-grid">
             {/* Feature 1: The Core */}
             <div className="feature-card">
-              <div className="feature-icon-wrapper">
-                <span className="feature-icon">◆</span>
-              </div>
-              <h3 className="feature-title">El Núcleo</h3>
+              <Link to="/biblioteca" className="feature-card__link">
+                <div className="feature-icon-wrapper">
+                  <span className="feature-icon">◆</span>
+                </div>
+                <h3 className="feature-title">La Biblioteca</h3>
+              </Link>
               <div className="feature-divider"></div>
               <p className="feature-text">
-                Rastrea títulos, autores y calificaciones con precisión arquitectónica. Cada volumen registrado en un relicario digital permanente.
+                Rastrea títulos, autores y géneros con precisión arquitectónica. Cada volumen registrado en un relicario digital permanente.
               </p>
             </div>
             

@@ -2,35 +2,53 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { API } from '../services/api.js'
 
-export default function TagModal({ etiquetaActiva, onClose }) {
+export default function ModalColeccion({ filtro, onClose }) {
   const navigate = useNavigate()
   const [librosAsociados, setLibrosAsociados] = useState([])
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
-    if (!etiquetaActiva) return
+    if (!filtro || !filtro.valor) return
 
     async function buscarLibros() {
       setCargando(true)
       try {
         const data = await API.getLibros()
         const filtrados = data.filter((libro) => {
-          if (!libro.etiquetas) return false
-          const listado = libro.etiquetas.split(',').map(e => e.trim().toLowerCase())
-          return listado.includes(etiquetaActiva.toLowerCase())
+          if (filtro.tipo === 'etiqueta') {
+            if (!libro.etiquetas) return false
+            const listado = libro.etiquetas.split(',').map(e => e.trim().toLowerCase())
+            return listado.includes(filtro.valor.toLowerCase())
+          } else if (filtro.tipo === 'género') {
+            if (!libro.genero) return false
+            return libro.genero.toLowerCase() === filtro.valor.toLowerCase()
+          } else if (filtro.tipo === 'autor') {
+            if (!libro.autor) return false
+            return libro.autor.toLowerCase() === filtro.valor.toLowerCase()
+          } else if (filtro.tipo === 'editorial') {
+            if (!libro.editorial) return false
+            return libro.editorial.toLowerCase() === filtro.valor.toLowerCase()
+          } else if (filtro.tipo === 'formato') {
+            if (!libro.formato) return false
+            return libro.formato.toLowerCase() === filtro.valor.toLowerCase()
+          }
+          return false
         })
         setLibrosAsociados(filtrados)
       } catch (err) {
-        console.error('Error al cargar libros por etiqueta', err)
+        console.error(`Error al cargar libros por ${filtro.tipo}`, err)
       } finally {
         setCargando(false)
       }
     }
     
     buscarLibros()
-  }, [etiquetaActiva])
+  }, [filtro])
 
-  if (!etiquetaActiva) return null
+  if (!filtro || !filtro.valor) return null
+
+  // Capitalizamos el tipo para mostrarlo bonito (Ej: Género, Autor, Etiqueta)
+  const tipoCapitalizado = filtro.tipo.charAt(0).toUpperCase() + filtro.tipo.slice(1)
 
   return (
     <div className="tag-modal-overlay" onClick={onClose}>
@@ -38,7 +56,7 @@ export default function TagModal({ etiquetaActiva, onClose }) {
         <div className="tag-modal-cabecera">
           <h3 className="tag-modal-titulo">
             <span className="tag-modal-ornamento">◈</span>
-            Etiqueta: <span style={{ color: 'var(--oro-primario)' }}>{etiquetaActiva}</span>
+            {tipoCapitalizado}: <span style={{ color: 'var(--oro-primario)' }}>{filtro.valor}</span>
           </h3>
           <button className="tag-modal-cerrar" onClick={onClose}>✕</button>
         </div>
@@ -70,7 +88,7 @@ export default function TagModal({ etiquetaActiva, onClose }) {
                   <h4 className="tag-modal-libro-titulo">{libro.titulo}</h4>
                   <p className="tag-modal-libro-autor">{libro.autor}</p>
                   <span className="etiqueta-chip etiqueta-chip--activa" style={{fontSize: '0.65rem', padding: '0.1rem 0.3rem', marginTop: 'auto', display: 'inline-block', width: 'fit-content'}}>
-                    {etiquetaActiva}
+                    {filtro.valor}
                   </span>
                 </div>
               </div>
@@ -79,7 +97,7 @@ export default function TagModal({ etiquetaActiva, onClose }) {
         ) : (
           <div className="estado-vacio" style={{ padding: 'var(--espacio-lg)' }}>
             <span className="estado-vacio__ornamento">◈</span>
-            No se encontraron más libros con esta etiqueta.
+            No se encontraron más libros para este filtro.
           </div>
         )}
       </div>

@@ -1,15 +1,26 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Biblioteca from './pages/Biblioteca.jsx'
 import DetalleLibro from './pages/DetalleLibro.jsx'
 import FormLibro from './pages/FormLibro.jsx'
 import LandingPage from './pages/LandingPage.jsx'
-import Timers from './pages/Timers.jsx'
+import Sesiones from './pages/Timers.jsx'
 import Reportes from './pages/Reportes.jsx'
+import GuiaUsuario from './pages/GuiaUsuario.jsx'
 import BackButton from './components/BackButton.jsx'
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <BackButton />
       <Routes>
         <Route path="/"                   element={<LandingPage />} />
@@ -17,8 +28,9 @@ export default function App() {
         <Route path="/libro/:id"          element={<DetalleLibro />} />
         <Route path="/agregar"            element={<FormLibro />} />
         <Route path="/libro/:id/editar"   element={<FormLibro />} />
-        <Route path="/sesiones"           element={<Timers />} />
+        <Route path="/sesiones"           element={<Sesiones />} />
         <Route path="/reportes"           element={<Reportes />} />
+        <Route path="/guia"               element={<GuiaUsuario />} />
       </Routes>
     </BrowserRouter>
   )

@@ -122,7 +122,7 @@ function ModalEditarSesion({ sesion, onCerrar, onGuardada }) {
 }
 
 /* ── Main page ───────────────────────────────────────────────────────────── */
-export default function Timers() {
+export default function Sesiones() {
   const navigate = useNavigate()
   const [activas, setActivas] = useState([])
   const [hoy, setHoy] = useState(null)
@@ -174,7 +174,13 @@ export default function Timers() {
 
   function onSesionEditada(updated) {
     setSesionEditando(null)
-    cargarDatos()
+    setHoy((prev) => {
+      if (!prev?.sesiones) return prev
+      return {
+        ...prev,
+        sesiones: prev.sesiones.map((s) => s.id === updated.id ? updated : s),
+      }
+    })
   }
 
   const sesionesHoyCompletadas = hoy?.sesiones ? [...hoy.sesiones].reverse() : []

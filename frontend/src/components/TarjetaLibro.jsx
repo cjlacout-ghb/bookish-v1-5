@@ -1,14 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
-/**
- * Formatea segundos como "Xh Ym"
- */
-function formatearTiempo(segundos) {
-  const h = Math.floor(segundos / 3600)
-  const m = Math.floor((segundos % 3600) / 60)
-  if (h === 0) return `${m}m`
-  return `${h}h ${m}m`
-}
+import { formatearTiempo } from './Timer.jsx'
 
 const ESTADOS_ETIQUETA = {
   leyendo:  'Leyendo',
@@ -54,12 +46,11 @@ function TarjetaLibro({ libro }) {
           <div className="noir-card-badge">
             <span className="noir-card-badge-text">
               {(() => {
-                const actual = parseInt(libro.pagina_actual || 0);
-                const total = parseInt(libro.paginas || 0);
-                if (total <= 0) return '◆';
-                const pct = Math.round((actual / total) * 100);
-                return `${pct}%`;
-              })()}
+                const actual = parseInt(libro.pagina_actual || 0)
+                const total = parseInt(libro.paginas || 0)
+                if (total <= 0) return null
+                return `${Math.round((actual / total) * 100)}%`
+              })() ?? '◆'}
             </span>
           </div>
         ) : null}

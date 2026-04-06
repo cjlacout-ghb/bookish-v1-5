@@ -210,6 +210,24 @@ export default function FormLibro() {
     )
   }
 
+  // ── Computed date values ────────────────────────────────────────────────
+  const diasDesdeInicio = (() => {
+    if (!campos.fecha_inicio) return 0
+    const inicio = new Date(campos.fecha_inicio + 'T12:00:00')
+    const hoyBA = getHoyBA()
+    const hoy = new Date(hoyBA + 'T12:00:00')
+    const dias = Math.ceil((hoy - inicio) / (1000 * 60 * 60 * 24))
+    return dias >= 0 ? dias : 0
+  })()
+
+  const diasDeLectura = (() => {
+    if (!campos.fecha_inicio || !campos.fecha_fin) return 0
+    const inicio = new Date(campos.fecha_inicio + 'T12:00:00')
+    const fin = new Date(campos.fecha_fin + 'T12:00:00')
+    const dias = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24))
+    return dias >= 0 ? dias : 0
+  })()
+
   return (
     <>
       <Header />
@@ -348,7 +366,7 @@ export default function FormLibro() {
                   <Estrellas
                     valor={campos.calificacion}
                     onChange={(val) => setCampos((prev) => ({ ...prev, calificacion: val }))}
-                    soloLectura={formHabilitado ? false : true}
+                    soloLectura={!formHabilitado}
                   />
                 </div>
               </div>
@@ -374,15 +392,7 @@ export default function FormLibro() {
               <div className="campo">
                 <span className="campo__etiqueta">días desde inicio</span>
                 <div className="campo__valor-calculado" id="dias-desde-inicio" style={{ textAlign: 'left' }}>
-                  {(() => {
-                    if (!campos.fecha_inicio) return '0'
-                    const inicio = new Date(campos.fecha_inicio + 'T12:00:00')
-                    const hoyBA = getHoyBA()
-                    const hoy = new Date(hoyBA + 'T12:00:00')
-                    const diff = hoy - inicio
-                    const dias = Math.ceil(diff / (1000 * 60 * 60 * 24))
-                    return dias >= 0 ? dias : '0'
-                  })()} <span style={{ fontSize: '0.75rem', color: 'var(--texto-tenue)' }}>días</span>
+                  {diasDesdeInicio} <span style={{ fontSize: '0.75rem', color: 'var(--texto-tenue)' }}>días</span>
                 </div>
               </div>
 
@@ -406,14 +416,7 @@ export default function FormLibro() {
               <div className="campo">
                 <span className="campo__etiqueta">días de lectura</span>
                 <div className="campo__valor-calculado" id="dias-lectura-resumen" style={{ textAlign: 'left' }}>
-                  {(() => {
-                    if (!campos.fecha_inicio || !campos.fecha_fin) return '0'
-                    const inicio = new Date(campos.fecha_inicio + 'T12:00:00')
-                    const fin = new Date(campos.fecha_fin + 'T12:00:00')
-                    const diff = fin - inicio
-                    const dias = Math.ceil(diff / (1000 * 60 * 60 * 24))
-                    return dias >= 0 ? dias : '0'
-                  })()} <span style={{ fontSize: '0.75rem', color: 'var(--texto-tenue)' }}>días</span>
+                  {diasDeLectura} <span style={{ fontSize: '0.75rem', color: 'var(--texto-tenue)' }}>días</span>
                 </div>
               </div>
             </div>

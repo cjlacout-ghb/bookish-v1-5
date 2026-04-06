@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Estrellas from '../components/Estrellas.jsx'
 import Timer from '../components/Timer.jsx'
 import ModalNota from '../components/ModalNota.jsx'
-import TagModal from '../components/TagModal.jsx'
+import ModalColeccion from '../components/ModalColeccion.jsx'
 import Header from '../components/Header.jsx'
 import { API } from '../services/api.js'
 
@@ -24,7 +24,7 @@ export default function DetalleLibro() {
   const [totalSegundos, setTotalSegundos] = useState(0)
   const [sesionActiva, setSesionActiva] = useState(null)
   const [errorNotas, setErrorNotas] = useState(false)
-  const [etiquetaActiva, setEtiquetaActiva] = useState(null)
+  const [filtroActivo, setFiltroActivo] = useState(null)
 
   useEffect(() => {
     cargarLibro()
@@ -160,7 +160,14 @@ export default function DetalleLibro() {
               </select>
 
               <h1 className="detalle-libro__titulo">{libro.titulo}</h1>
-              <p className="detalle-libro__autor">{libro.autor}</p>
+              <p 
+                className="detalle-libro__autor texto-interactivo" 
+                onClick={() => setFiltroActivo({ tipo: 'autor', valor: libro.autor })}
+                title={`Ver más libros de ${libro.autor}`}
+                style={{ width: 'fit-content' }}
+              >
+                {libro.autor}
+              </p>
 
               <Estrellas valor={libro.calificacion} soloLectura />
 
@@ -169,13 +176,26 @@ export default function DetalleLibro() {
                 {libro.genero && (
                   <div className="atributo">
                     <span className="atributo__clave">Género</span>
-                    <span className="atributo__valor">{libro.genero}</span>
+                    <span 
+                      className="atributo__valor atributo__valor--interactivo"
+                      onClick={() => setFiltroActivo({ tipo: 'género', valor: libro.genero })}
+                      title={`Ver más libros del género: ${libro.genero}`}
+                    >
+                      {libro.genero}
+                    </span>
                   </div>
                 )}
                 {libro.formato && (
                   <div className="atributo">
                     <span className="atributo__clave">Formato</span>
-                    <span className="atributo__valor" style={{ textTransform: 'capitalize' }}>{libro.formato}</span>
+                    <span 
+                      className="atributo__valor atributo__valor--interactivo" 
+                      style={{ textTransform: 'capitalize' }}
+                      onClick={() => setFiltroActivo({ tipo: 'formato', valor: libro.formato })}
+                      title={`Ver más libros en formato: ${libro.formato}`}
+                    >
+                      {libro.formato}
+                    </span>
                   </div>
                 )}
                 {libro.paginas && (
@@ -187,7 +207,13 @@ export default function DetalleLibro() {
                 {libro.editorial && (
                   <div className="atributo">
                     <span className="atributo__clave">Editorial</span>
-                    <span className="atributo__valor">{libro.editorial}</span>
+                    <span 
+                      className="atributo__valor atributo__valor--interactivo"
+                      onClick={() => setFiltroActivo({ tipo: 'editorial', valor: libro.editorial })}
+                      title={`Ver más libros de la editorial: ${libro.editorial}`}
+                    >
+                      {libro.editorial}
+                    </span>
                   </div>
                 )}
                 {libro.anio && (
@@ -212,8 +238,8 @@ export default function DetalleLibro() {
                   {etiquetas.map((e, i) => (
                     <span 
                       key={i} 
-                      className={`etiqueta-chip ${etiquetaActiva === e ? 'etiqueta-chip--activa' : ''}`}
-                      onClick={() => setEtiquetaActiva(etiquetaActiva === e ? null : e)}
+                      className={`etiqueta-chip ${filtroActivo?.valor === e ? 'etiqueta-chip--activa' : ''}`}
+                      onClick={() => setFiltroActivo(filtroActivo?.valor === e ? null : { tipo: 'etiqueta', valor: e })}
                     >
                       {e}
                     </span>
@@ -318,10 +344,10 @@ export default function DetalleLibro() {
         />
       )}
 
-      {/* Modal de Etiqueta (Libros relacionados) */}
-      <TagModal 
-        etiquetaActiva={etiquetaActiva} 
-        onClose={() => setEtiquetaActiva(null)} 
+      {/* Modal de Colección (Libros relacionados) */}
+      <ModalColeccion 
+        filtro={filtroActivo} 
+        onClose={() => setFiltroActivo(null)} 
       />
     </>
   )
