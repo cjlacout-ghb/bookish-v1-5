@@ -23,14 +23,14 @@ export default function App() {
       <ScrollToTop />
       <BackButton />
       <Routes>
-        <Route path="/"                   element={<LandingPage />} />
-        <Route path="/biblioteca"         element={<Biblioteca />} />
-        <Route path="/libro/:id"          element={<DetalleLibro />} />
-        <Route path="/agregar"            element={<FormLibro />} />
-        <Route path="/libro/:id/editar"   element={<FormLibro />} />
-        <Route path="/sesiones"           element={<Sesiones />} />
-        <Route path="/reportes"           element={<Reportes />} />
-        <Route path="/guia"               element={<GuiaUsuario />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/biblioteca" element={<Biblioteca />} />
+        <Route path="/libro/:id" element={<DetalleLibro />} />
+        <Route path="/agregar" element={<FormLibro />} />
+        <Route path="/libro/:id/editar" element={<FormLibro />} />
+        <Route path="/sesiones" element={<Sesiones />} />
+        <Route path="/reportes" element={<Reportes />} />
+        <Route path="/guia" element={<GuiaUsuario />} />
       </Routes>
     </Router>
   )

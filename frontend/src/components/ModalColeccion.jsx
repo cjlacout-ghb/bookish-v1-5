@@ -79,7 +79,7 @@ export default function ModalColeccion({ filtro, onClose }) {
               >
                 <div className="tag-modal-portada">
                   {libro.portada_filename ? (
-                    <img src={`/portadas/${libro.portada_filename}`} alt={libro.titulo} />
+                    <img src={`app://covers/${libro.portada_filename}`} alt={libro.titulo} />
                   ) : (
                     <span className="tarjeta-libro__sin-portada-ornamento" style={{fontSize: '1.2rem'}}>◆</span>
                   )}

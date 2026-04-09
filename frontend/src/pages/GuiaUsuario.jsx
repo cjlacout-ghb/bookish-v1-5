@@ -67,10 +67,21 @@ export default function GuiaUsuario() {
             <div className="seccion-bloque">
               <h2 className="seccion-titulo">Preguntas Frecuentes (FAQ)</h2>
               <div style={{ display: 'grid', gap: '1.5rem' }}>
-                <div>
-                  <h4 style={{ color: 'var(--oro-primario)', fontSize: '0.8rem' }}>¿Dónde se guarda mi información físicamente?</h4>
-                  <p>En Windows, tus libros y portadas se guardan en la carpeta <code>%LocalAppData%\Bookish</code> de tu usuario. Si borrás el programa y lo volvés a descargar, tus libros seguirán ahí porque la base de datos es independiente del ejecutable.</p>
+                <div style={{ padding: '1.5rem', border: '1px double var(--oro-oscuro)', background: 'rgba(212, 175, 55, 0.05)', borderRadius: '4px' }}>
+                  <h3 style={{ color: 'var(--oro-primario)', fontSize: '0.9rem', marginBottom: '1.2rem', textAlign: 'center', letterSpacing: '2px' }}>◆ SECCIÓN ESPECIAL: GESTIÓN DE ARCHIVOS ◆</h3>
+                  
+                  <div style={{ marginBottom: '1.2rem' }}>
+                    <h4 style={{ color: 'var(--blanco)', fontSize: '0.8rem', marginBottom: '0.5rem' }}>1. ¿Dónde se guarda mi base de datos?</h4>
+                    <p style={{ margin: 0 }}>Físicamente, todos tus libros y sesiones están en el archivo <code>bookish.db</code> ubicado en:</p>
+                    <code style={{ display: 'block', marginTop: '0.5rem', padding: '0.5rem', background: 'var(--sup-alta)', fontSize: '0.75rem', color: 'var(--oro-primario)', border: '1px solid var(--sup-baja)' }}>Documentos\Bookish\data\</code>
+                  </div>
+
+                  <div>
+                    <h4 style={{ color: 'var(--blanco)', fontSize: '0.8rem', marginBottom: '0.5rem' }}>2. ¿Dónde se guardan mis portadas?</h4>
+                    <p style={{ margin: 0 }}>Bookish crea automáticamente una carpeta llamada <code>portadas</code> dentro de la misma ruta mencionada arriba. <strong>No hace falta que la crees manualmente</strong>; la aplicación la genera la primera vez que subís una imagen. Si querés hacer un backup de tus imágenes, esa es la carpeta que debés copiar.</p>
+                  </div>
                 </div>
+
                 <div>
                   <h4 style={{ color: 'var(--oro-primario)', fontSize: '0.8rem' }}>¿El temporizador sigue corriendo si cierro la app?</h4>
                   <p>Sí. La sesión queda guardada. El tiempo transcurrido se contabiliza correctamente cuando volvés a abrirla.</p>

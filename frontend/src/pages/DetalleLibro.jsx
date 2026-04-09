@@ -134,7 +134,7 @@ export default function DetalleLibro() {
             <div className="detalle-libro__portada">
               {libro.portada_filename ? (
                 <img
-                  src={`/portadas/${libro.portada_filename}`}
+                  src={`app://covers/${libro.portada_filename}`}
                   alt={`Portada de ${libro.titulo}`}
                 />
               ) : (

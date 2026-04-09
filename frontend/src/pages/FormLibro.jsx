@@ -487,7 +487,7 @@ export default function FormLibro() {
               {(portadaPreview || portadaExistente) && (
                 <div className="form-libro__portada-preview">
                   <img
-                    src={portadaPreview || `/portadas/${portadaExistente}`}
+                    src={portadaPreview || `app://covers/${portadaExistente}`}
                     alt="Vista previa de portada"
                   />
                 </div>

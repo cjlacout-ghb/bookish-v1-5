@@ -32,7 +32,7 @@ function TarjetaLibro({ libro }) {
       <div className="noir-card-img-wrap">
         {tienePortada ? (
           <img
-            src={`/portadas/${libro.portada_filename}`}
+            src={`app://covers/${libro.portada_filename}`}
             alt={`Portada de ${libro.titulo}`}
           />
         ) : (

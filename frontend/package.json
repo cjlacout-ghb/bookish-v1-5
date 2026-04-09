@@ -1,5 +1,5 @@
 {
-  "name": "bookish-frontend",
+  "name": "bookish",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -42,6 +42,16 @@
         "from": "../backend/dist/bookish-backend.exe",
         "to": "bookish-backend.exe"
       }
-    ]
+    ],
+    "win": {
+      "target": "nsis",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Bookish",
+      "artifactName": "${productName} Setup ${version}.${ext}"
+    }
   }
 }

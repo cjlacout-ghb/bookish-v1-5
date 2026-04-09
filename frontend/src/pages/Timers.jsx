@@ -222,7 +222,7 @@ export default function Sesiones() {
                     {/* Portada pequeña */}
                     <div className="timers-card__portada">
                       {sesion.libro?.portada_filename ? (
-                        <img src={`/portadas/${sesion.libro.portada_filename}`} alt="" />
+                        <img src={`app://covers/${sesion.libro.portada_filename}`} alt="" />
                       ) : (
                         <span>◆</span>
                       )}

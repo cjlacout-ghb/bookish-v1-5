@@ -1,5 +1,5 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || '';
-const API_URL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api';
+export const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = `${BASE_URL}/api`;
 
 async function handleResponse(res) {
   if (!res.ok) {
@@ -83,7 +83,7 @@ export const API = {
   getEstadisticas: () => fetch(`${API_URL}/estadisticas`).then(handleResponse),
 };
 
-export const getPortadaUrl = (filename) => {
-  if (!filename) return '';
-  return `${BASE_URL}/portadas/${filename}`;
+export const getFileURL = (filename) => {
+  if (!filename) return null;
+  return `app://covers/${filename}`;
 };
